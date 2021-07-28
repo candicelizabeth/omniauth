@@ -1,0 +1,6 @@
+   <h3>Select an Already Existing Brand:</h3>
+    <%= f.collection_select :brand_id, Brand.all, :id, :name %>
+    <h3>Make a Brand: </h3>
+    <%= f.fields_for :brand do |b| %>
+    <%= render partial: "brands/form", locals: { f: b } %>
+    <% end %>

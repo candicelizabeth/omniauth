@@ -1,0 +1,12 @@
+<%= render partial: "layouts/error", locals: { object: @shoe } %>
+
+<%= form_for([@brand, @shoe]) do |f| %>
+<%= f.label :price %>
+<%= f.number_field :price, step: 0.01%><br/>
+<%= f.label :condition %>
+<%= f.text_field :condition %><br/>
+<%= f.label :color %>
+<%= f.text_field :color  %><br/>
+<%= fields_for_brand(f) %>
+<%= f.submit %>
+<% end %>

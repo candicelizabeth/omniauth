@@ -1,0 +1,27 @@
+<%= new_header_brand %>
+<%= render partial: "form" %>
+
+<!--
+<form method="POST" action="/shoes">
+<input type="hidden" name=authenticity_token value="<%= form_authenticity_token %>">
+<label for="shoe_brand">Brand: </label>
+<input type="text" name="shoe[brand]" id="shoe_brand">
+<label for="shoe_price">Price: </label>
+<input type="number" name="shoe[price]" id="shoe_price" step="0.01">
+<input type="submit" value="Create Shoe">
+</form>
+
+---------------------------------------------------------------------
+<%= form_tag(shoes_path) do %>
+<%= label_tag(:"shoe_brand") %>
+<%= text_field_tag :"shoe[brand]"%>
+<%= submit_tag "Create Shoe" %>
+<% end %>
+---------------------------------------------------------------------
+<%= form_with(model: @shoe) do |f| %>
+<%= f.label :brand %>
+<%= f.text_field :brand %>
+<%= f.label :price %>
+<%= f.number_field :price, step: 0.01%>
+<%= f.submit %>
+<% end %> -->

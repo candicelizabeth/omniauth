@@ -1,0 +1,6 @@
+<h1>SHOE PAGE</h1>
+<h3>Shoe Brand: <%= @shoe.name_and_color %></h3>
+<h3>Shoe Condition: <%= @shoe.condition %></h3>
+<%= shoe_price %>
+<%= link_to "Edit", edit_shoe_path(@shoe)%>
+<%= link_to "Delete", shoe_path(@shoe), method: 'delete' %>

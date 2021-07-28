@@ -1,0 +1,27 @@
+<h1>Edit Brand: </h1>
+<% if @brand.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@brand.errors.count, "error") %> prohibited this brand from being saved:</h2>
+
+    <ul>
+      <% @brand.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(@brand) do |f| %>
+  <%= render partial: "form", locals: { f: f } %>
+  <h3>Add Shoes:</h3>
+  <%= f.fields_for :shoes do |s| %>
+    <%= s.label :price %>
+    <%= s.number_field :price, step: 0.01%><br/>
+    <%= s.label :condition %>
+    <%= s.text_field :condition %><br/>
+    <%= s.label :color %>
+    <%= s.text_field :color  %><br/>
+    <hr>
+  <% end %>
+  <%= f.submit %>
+  <% end %>
