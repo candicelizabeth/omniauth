@@ -3,7 +3,15 @@ class SessionsController < ApplicationController
    end
 
    def create 
-
+    # byebug
+    user = User.find_by_email(params[:user][:email])
+    if user && user.authenticate(params[:user][:password])
+        session[:user_id] = user.id
+        redirect_to shoes_path
+    else
+        flash[:message] = "Invalid credentials. Please try again. "
+        redirect_to login_path
+    end
    end
 
    def omniauth

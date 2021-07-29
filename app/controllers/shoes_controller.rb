@@ -1,5 +1,5 @@
 class ShoesController < ApplicationController
-     
+     before_action :redirect_if_not_logged_in? 
     layout "shoe" 
 
     def index  

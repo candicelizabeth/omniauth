@@ -15,8 +15,11 @@
   <%= link_to "Shoes", shoes_path %> |
   <%= link_to "Create Brand", new_brand_path %> |
   <%= link_to "Brands", brands_path %> | 
-  <%= button_to "Sign in with Google", '/auth/google_oauth2'%> | 
+  <% if !logged_in? %>
+  <%= button_to "Sign in with Google", '/auth/google_oauth2'%> |
+  <% else %> 
   <%= link_to "Log Out", logout_path, method: 'delete' %>
+  <% end %>
   <% flash.each do |type, msg| %>
     <%= msg %>
   <% end %>

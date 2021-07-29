@@ -6,6 +6,7 @@ class Shoe < ApplicationRecord
         # byebug
         if !hash_of_attributes["name"].blank? && !hash_of_attributes["year_founded"].blank?
             self.brand = Brand.find_or_create_by(hash_of_attributes)
+            
         end
     end
 
@@ -13,7 +14,7 @@ class Shoe < ApplicationRecord
     validates :price, numericality: {greater_than: 0, less_than: 5000}
     validates :color, presence: true, two_word: true, uniqueness: {scope: [:brand, :price]}
     # validate :too_many_shoes
-
+    # scope :order_by_price, -> { order(:price)}
     def name_and_color 
         "#{self.brand.name} - #{self.color}"
     end
@@ -26,9 +27,9 @@ class Shoe < ApplicationRecord
     #     self.where("LIMIT 1")
     # end
 
-    def too_many_shoes 
-        if Shoe.all.length >= 6
-            errors.add(:base, :invalid, message: "you have too many Shoes!")
-        end
-    end
+    # def too_many_shoes 
+    #     if Shoe.all.length >= 6
+    #         errors.add(:base, :invalid, message: "you have too many Shoes!")
+    #     end
+    # end
 end
