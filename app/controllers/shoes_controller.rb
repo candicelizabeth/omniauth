@@ -1,18 +1,23 @@
 class ShoesController < ApplicationController
-     before_action :redirect_if_not_logged_in? 
+     before_action :redirect_if_not_logged_in?
+     before_action :find_shoe, only: [:show, :update, :edit, :destroy]
     layout "shoe" 
 
     def index  
+        # @colors = Shoe.all_colors
         if params[:brand_id] &&  @brand = Brand.find_by_id(params[:brand_id])
             @shoes = @brand.shoes
         else
-            @shoes = Shoe.all
+            @shoes = Shoe.order_by_condition.order_by_price 
+        end
+        if params[:shoe] && !params[:shoe][:color].blank?
+            @shoes = Shoe.color_selector(params[:shoe][:color])
         end
         
     end
 
     def show
-        @shoe = Shoe.find_by_id(params[:id])
+      
     end
 
     def new 
@@ -38,11 +43,11 @@ class ShoesController < ApplicationController
     end
 
     def edit 
-        @shoe = Shoe.find_by_id(params[:id])
+       
     end
 
     def update 
-        @shoe = Shoe.find_by_id(params[:id])
+       
         @shoe.update(shoe_params)
         if @shoe.valid?
             redirect_to shoe_path(@shoe)
@@ -57,7 +62,7 @@ class ShoesController < ApplicationController
     end
 
     def destroy 
-        @shoe = Shoe.find_by_id(params[:id])
+    
         @shoe.destroy 
         redirect_to shoes_path
     end
@@ -66,6 +71,10 @@ class ShoesController < ApplicationController
 
     def shoe_params
         params.require(:shoe).permit(:color, :price, :condition, :brand_id, brand_attributes: [:name, :year_founded])
+    end
+
+    def find_shoe 
+        @shoe = Shoe.find_by_id(params[:id])
     end
 
 end

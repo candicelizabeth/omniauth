@@ -1,3 +1,8 @@
 <%= index_header_brand%> 
-
+<h1>Filter By Color:</h1>
+<%= form_tag(shoes_path, method: "get") do %>
+<%= collection_select :shoe, :color, Shoe.select(:color).distinct, :color, :color, {:include_blank => 'Choose Color'}%>
+<%= submit_tag "Filter"%>
+<% end %>
 <%= render partial: "shoe", collection: @shoes %>
+

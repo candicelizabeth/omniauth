@@ -1,7 +1,7 @@
 class BrandsController < ApplicationController
 
     def index
-        @brands = Brand.all
+        @brands = Brand.org_brand
     end
     
     def show 
