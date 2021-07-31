@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :customizations
+  root to: 'sessions#welcome'
   get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

@@ -1,5 +1,7 @@
 class Shoe < ApplicationRecord
     belongs_to :brand
+    belongs_to :user
+    has_many :customizations
     accepts_nested_attributes_for :brand #brand_attributes=
 
     def brand_attributes=(hash_of_attributes)
@@ -14,19 +16,19 @@ class Shoe < ApplicationRecord
     validates :price, numericality: {greater_than: 0, less_than: 5000}
     validates :color, presence: true, two_word: true, uniqueness: {scope: [:brand, :price]}
     # validate :too_many_shoes
-  scope :order_by_price, -> {order(:price)}
-
+  scope :order_by_price, -> {order(price: :desc)}
   scope :order_by_condition, -> {order(:condition)}
   scope :color_selector, -> (color) {where('color == ?', color)}
-    def name_and_color 
+    
+  def name_and_color 
         "#{self.brand.name} - #{self.color} - #{self.condition}"
     end
 
    
 
-    # def self.order_by_price 
-    #     self.order(price: :desc).limit(1)
-    # end
+    def self.order_by_price 
+        self.order(price: :desc)
+    end
 
    
     # def self.most_expensive 

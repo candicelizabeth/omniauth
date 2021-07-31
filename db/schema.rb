@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_27_220554) do
+ActiveRecord::Schema.define(version: 2021_07_30_224953) do
 
   create_table "brands", force: :cascade do |t|
     t.string "name"
     t.integer "year_founded"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "customizations", force: :cascade do |t|
+    t.string "part"
+    t.string "color"
+    t.integer "shoe_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shoe_id"], name: "index_customizations_on_shoe_id"
   end
 
   create_table "shoes", force: :cascade do |t|
@@ -26,6 +35,7 @@ ActiveRecord::Schema.define(version: 2021_07_27_220554) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "brand_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,4 +48,5 @@ ActiveRecord::Schema.define(version: 2021_07_27_220554) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "customizations", "shoes"
 end

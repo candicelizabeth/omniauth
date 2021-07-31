@@ -1,11 +1,17 @@
 class SessionsController < ApplicationController 
+    def welcome 
+        render layout: 'welcome'
+    end
    def new 
    end
 
    def create 
     # byebug
+    # @person && @person.name
+    # @person.try(:name)
     user = User.find_by_email(params[:user][:email])
-    if user && user.authenticate(params[:user][:password])
+    # if user && user.authenticate(params[:user][:password])
+    if user.try(:authenticate, params[:user][:password])
         session[:user_id] = user.id
         redirect_to shoes_path
     else
@@ -16,11 +22,7 @@ class SessionsController < ApplicationController
 
    def omniauth
     # User.find_or_create_by(name: params["name"])
-    user = User.find_or_create_by(uid: auth['uid'], provider: auth['provider']) do |u| 
-        u.email = auth['info']['email']
-        u.username = auth['info']['name']
-        u.password = SecureRandom.hex(15)
-    end
+    user = User.from_omniauth(auth)
     if user.valid? 
         session[:user_id] = user.id
         flash[:message] = "Successful Login!!"

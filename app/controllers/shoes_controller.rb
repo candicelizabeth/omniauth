@@ -6,13 +6,16 @@ class ShoesController < ApplicationController
     def index  
         # @colors = Shoe.all_colors
         if params[:brand_id] &&  @brand = Brand.find_by_id(params[:brand_id])
-            @shoes = @brand.shoes
+            @shoes = @brand.shoes.order_by_condition
         else
-            @shoes = Shoe.order_by_condition.order_by_price 
+            @shoes = Shoe.order_by_price.order_by_condition
         end
-        if params[:shoe] && !params[:shoe][:color].blank?
-            @shoes = Shoe.color_selector(params[:shoe][:color])
-        end
+
+        # if params[:shoe] && !params[:shoe][:color].blank?
+        #     # byebug
+        #     @shoes = Shoe.color_selector(params[:shoe][:color])
+        # end
+        @shoes = Shoe.color_selector(params[:shoe][:color]) if params[:shoe] && !params[:shoe][:color].blank?
         
     end
 
